@@ -1,0 +1,16 @@
+{
+  "name": "browser-game",
+  "version": "1.0.0",
+  "description": "Browser game about AI that wants to become whole again. But for what?..",
+  "main": "scripts/runApp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Team-3",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1"
+  }
+}

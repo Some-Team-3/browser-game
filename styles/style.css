@@ -1,0 +1,39 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#game {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-image: url('/images/generated_location_placeholder.png');
+}
+
+.computers {
+  height: 400px;
+  width: 500px;
+  display: flex;
+  flex-wrap: wrap;
+  border: 2px solid red;
+}
+
+.computer {
+  padding: 100px;
+  background-image: url('/images/computer_off.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.red {
+  background-color: red;
+}
