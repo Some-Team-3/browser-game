@@ -23,7 +23,6 @@ body {
   width: 500px;
   display: flex;
   flex-wrap: wrap;
-  border: 2px solid red;
 }
 
 .computer {
