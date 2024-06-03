@@ -1,8 +1,10 @@
+const computers = [...document.getElementsByClassName('computer')];
+const screen = document.getElementById('screen');
+
 export default () => {
-  const computers = [...document.getElementsByClassName('computer')];
   computers.forEach((computer) => {
     computer.addEventListener('click', ({ target }) => {
-      alert(`screen ${target.getAttribute('id')}`);
+      screen.classList.remove('hide');
     });
   });
 };
