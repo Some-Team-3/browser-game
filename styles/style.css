@@ -1,7 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
 body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+
+  font-family: "Share Tech Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
+  color: #5bf870;
 }
 
 #game {
@@ -26,16 +33,39 @@ body {
 }
 
 .computer {
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 150px;
   background: center/contain url('/images/computer_off.png') no-repeat;
 }
 
-#screen {
+.pos_abs {
+  position: absolute;
+}
+
+#terminal {
   position: absolute;
   height: 700px;
   width: 1000px;
   background: center/contain url('/images/screen_placeholder.png') no-repeat;
+}
+
+#terminal_output {
+  position: absolute;
+  top: 140px;
+  right: 190px;
+  bottom: 140px;
+  left: 180px;
+  /* border: 2px red solid; */
+}
+
+.typed {
+  display: block;
+}
+
+.typed-cursor {
+  opacity: 1;
+  font-weight: 200;
+  animation: blink 0.7s infinite;
 }
 
 .show {
