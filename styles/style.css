@@ -22,7 +22,23 @@ body {
   justify-content: center;
   align-items: center;
 
-  background-image: url('/images/generated_location_placeholder.png');
+  background: center/contain url('/images/generated_location_placeholder.png') no-repeat;
+}
+
+#command_line {
+  display: flex;
+  align-items: center;
+}
+
+#command_line_input {
+  flex-grow: 1;
+
+  font: inherit;
+  color: inherit;
+
+  background: none;
+  border: none;
+  
 }
 
 .computers {
@@ -35,7 +51,15 @@ body {
 .computer {
   height: 150px;
   width: 150px;
-  background: center/contain url('/images/computer_off.png') no-repeat;
+  background: center/contain no-repeat;
+}
+
+.off {
+  background-image: url('/images/computer_off.png');
+}
+
+.on {
+  background-image: url('/images/computer_on.png');
 }
 
 .pos_abs {
@@ -49,13 +73,13 @@ body {
   background: center/contain url('/images/screen_placeholder.png') no-repeat;
 }
 
-#terminal_output {
+#terminal_content {
   position: absolute;
   top: 140px;
   right: 190px;
   bottom: 140px;
   left: 180px;
-  /* border: 2px red solid; */
+  overflow-y: auto;
 }
 
 .typed {
