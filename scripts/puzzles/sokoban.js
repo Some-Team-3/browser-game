@@ -1,4 +1,4 @@
-function sokoban() {
+export default function sokoban(field) {
   const levelData = [ // w - стена; b - ящик; p - место для ящика;  y - игрок
     '  wwwww ',
     'www   w ',
@@ -16,7 +16,6 @@ function sokoban() {
   let forwardCell;
   let forward2cell;
   let div;
-  const field = document.getElementById('field');
 
   levelData.forEach((row, n) => {
     row.split('').forEach((square, m) => {
@@ -59,6 +58,10 @@ function sokoban() {
         dx = 0;
         dy = 1;
         break;
+      case 'Escape':
+        field.replaceChildren();
+        sokoban(field);
+        return;
       default:
         return;
     }
@@ -81,10 +84,11 @@ function sokoban() {
     x += dx; y += dy;
 
     if (isWin() === true) {
-      alert('win'); // заменится что-то что должно происходить в случае победы; визуальные эффекты/выход на главную страницу/etc
+      window.removeEventListener('keydown', handleKeydown);
     }
   };
 
   window.addEventListener('keydown', handleKeydown);
+  return isWin;
 }
-sokoban();
+// sokoban();

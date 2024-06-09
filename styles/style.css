@@ -9,6 +9,7 @@ body {
   font-weight: 400;
   font-style: normal;
   color: #5bf870;
+  text-decoration: none;
 }
 
 #game {
@@ -42,20 +43,83 @@ body {
 }
 
 .computers {
-  height: 400px;
-  width: 500px;
-  display: flex;
-  flex-wrap: wrap;
+  position: relative;
+
+  height: 600px;
+  width: 800px;
 }
 
 .computer {
   height: 150px;
   width: 150px;
-  background: center/contain no-repeat;
+
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  background-image: url('/images/computer_off.png');
 }
 
-.off {
-  background-image: url('/images/computer_off.png');
+.computer:hover {
+  background-image: url('/images/computer_on.png');
+}
+  
+#c1 {
+  position: absolute;
+  top: 30px;
+  left: 120px;
+}
+
+#c2 {
+  position: absolute;
+  top: 30px;
+  right: 120px;
+}
+
+#c3 {
+  position: absolute;
+  right: 40px;
+  bottom: 180px;
+}
+
+#c4 {
+  position: absolute;
+  bottom: 0px;
+  left: 325px;
+}
+
+#c5 {
+  position: absolute;
+  bottom: 180px;
+  left: 40px;
+}
+
+#main {
+  height: 200px;
+  width: 200px;
+
+  position: absolute;
+  top: 200px;
+  right: 300px;
+}
+
+#img {
+  height: 300px;
+  width: 400px;
+
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.laborotory {
+  background-image: url('/images/laborotory.png');
+}
+
+.last_day {
+  background-image: url('/images/last_day.png');
+}
+
+.prototype {
+  background-image: url('/images/prototype.png');
 }
 
 .on {
@@ -92,10 +156,16 @@ body {
   animation: blink 0.7s infinite;
 }
 
-.show {
-  display: block;
-}
-
 .hide {
   display: none;
 }
+
+.s { background: white; }
+.w { background: black; }
+.b { background: blue; }
+.p { background: lightgray; }
+.a { background: red; }
+.y, .Y { background: green; }
+
+#field div { width: 20px; height: 20px; float: left; }
+#field {width: 160px; height: 160px; border: thin solid black;}

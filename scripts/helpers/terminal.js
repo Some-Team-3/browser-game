@@ -1,12 +1,14 @@
 import Typed from 'typed.js';
+import runPuzzle from './runPuzzle.js';
+
+const allCommands = ['help', 'browse', 'open', 'exit', 'password'];
 
 class Terminal {
-  constructor(text, id) {
-    this.common = text.t('terminal.common', { returnObjects: true, id });
-    this.content = text.t(`terminal.${id}`, { returnObjects: true });
-    this.commands = ['help', 'browse', 'open', 'exit', 'id', 'password'];
-    this.password_value = this.content.password ?? null;
-    this.access = !this.password_value;
+  constructor(common, content, state) {
+    this.common = common;
+    this.content = content;
+    this.state = state;
+    this.commands = this.state.access === 'granted' ? [...allCommands] : ['password', 'help', 'exit'];
   }
 
   run(container) {
@@ -17,10 +19,16 @@ class Terminal {
     terminalContent.setAttribute('id', 'terminal_content');
     terminal.append(terminalContent);
     container.append(terminal);
-    this.type(...this.content.loading.split('|'));
+    if (this.state.loading === 'run') {
+      this.type(this.content.loading);
+      this.state.loading = 'skip';
+    } else {
+      this.readline();
+    }
   }
 
-  type(...messages) {
+  type(str) { // нельзя вызывать несколько раз подряд
+    const messages = str.split('|');
     const typingManager = document.createElement('span');
     typingManager.setAttribute('id', 'manage_typing');
     this.terminal.append(typingManager);
@@ -67,7 +75,7 @@ class Terminal {
       }
     });
     label.setAttribute('id', 'command_line');
-    label.innerHTML = '>  ';
+    label.innerHTML = '>';
     label.append(input);
     this.terminal.append(label);
     input.focus();
@@ -79,41 +87,50 @@ class Terminal {
     commandRun.innerHTML = `>${input}`;
     this.terminal.append(commandRun);
     const [command, prompt] = input.split(' ');
-    if (!this.commands.includes(command)) {
+    if (!allCommands.includes(command)) {
       this.type(this.common.command_failed);
-    } else if (this.access || (command === 'password' || command === 'exit' || command === 'help')) {
-      this[command](prompt);
-    } else {
+    } else if (!this.commands.includes(command)) {
       this.type(this.common.no_access);
+    } else {
+      this[command](prompt);
     }
   }
 
   browse() {
-    this.type(this.content.files.all);
+    this.type(this.content.files.browse);
   }
 
-  open(filename) {
-    const fileContent = this.content.files[filename];
-    if (!fileContent) {
+  async open(filename) {
+    if (!this.state.files.includes(filename)) {
       this.type(this.common.open_failed);
+    } else if (filename.startsWith('puzzle')) {
+      if (this.state.puzzle_state === 'solved') {
+        this.type(this.common.no_puzzle);
+      } else {
+        await runPuzzle(this.state.puzzle, this.terminal);
+        this.type(this.content.puzzle_solved);
+      }
+    } else if (filename.endsWith('.png')) {
+      const img = document.createElement('div');
+      img.setAttribute('id', 'img');
+      img.classList.add(filename.slice(0, -4));
+      this.terminal.append(img);
+      this.readline();
     } else {
       this.type(this.content.files[filename]);
     }
   }
 
   help() {
-    this.type(...this.common.help.split('|'));
+    this.type(this.common.help);
   }
 
-  id() {
-    this.type(this.common.id);
-  }
-
-  password(pswd) {
-    if (this.access) {
+  password(value) {
+    if (this.state.access === 'granted') {
       this.type(this.common.no_password);
-    } else if (this.password_value === pswd) {
-      this.access = true;
+    } else if (this.state.password === value) {
+      this.state.access = 'granted';
+      this.commands = [...allCommands];
       this.type(this.common.password_right);
     } else {
       this.type(this.common.password_wrong);
@@ -121,7 +138,6 @@ class Terminal {
   }
 
   exit() {
-    this.type(this.common.exit);
     this.terminal.parentElement.remove();
   }
 }
