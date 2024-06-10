@@ -1,19 +1,8 @@
-const simonGame = () => {
-  let targetSequence = [];
+const simonGame = (fieldSimon) => {
+  const targetSequence = [];
   let userSequence = [];
   let levelCounter = 1;
   let randomNumber;
-
-  document.body.style.backgroundColor = 'black';
-
-  const textline = document.createElement('h1');
-  textline.setAttribute('class', 'textline');
-  textline.textContent = 'Нажмите ENTER';
-  document.body.append(textline);
-
-  const fieldSimon = document.createElement('div');
-  fieldSimon.setAttribute('id', 'fieldSimon');
-  document.body.append(fieldSimon);
 
   const colors = ['green', 'red', 'yellow', 'blue'];
   for (let k = 0; k < colors.length; k += 1) {
@@ -53,11 +42,10 @@ const simonGame = () => {
     }
   };
 
-  const makeSequence = () => {
-    for (let i = 1; i <= levelCounter; i += 1) {
-      randomNumber = Math.ceil(Math.random() * 4);
-      targetSequence.push(randomNumber);
-    }
+  const continueSequence = () => {
+    randomNumber = Math.ceil(Math.random() * 4);
+    targetSequence.push(randomNumber);
+
     targetSequence.forEach((item, index) => {
       setTimeout(() => {
         showSequence(item);
@@ -65,53 +53,27 @@ const simonGame = () => {
     });
   };
 
-  const changeLevel = () => {
-    if (levelCounter === 5) {
-    // alert('win')
-      return;
-    }
-    levelCounter += 1;
-    userSequence = [];
-    targetSequence = [];
-    textline.textContent = `Уровень: ${levelCounter}`;
-    makeSequence();
-  };
+  const isWin = () => levelCounter === 5 && userSequence.length === 5;
 
   const resetGame = () => {
-    textline.textContent = 'Нажмите ENTER';
-    document.body.style.backgroundColor = 'black';
-    levelCounter = 1;
-    targetSequence = [];
     userSequence = [];
+    targetSequence.forEach((item, index) => {
+      setTimeout(() => {
+        showSequence(item);
+      }, index * 1400);
+    });
   };
 
   const launchError = () => {
-    document.body.style.backgroundColor = 'red';
+    const terminal = document.getElementById('terminal_content');
+    terminal.classList.add('error');
     setTimeout(() => {
+      terminal.classList.remove('error');
       resetGame();
     }, 1500);
   };
 
-  const checkSequence = (indexOfArray) => {
-    if (userSequence[indexOfArray] === targetSequence[indexOfArray]) {
-      if (targetSequence.length === userSequence.length) {
-        setTimeout(() => {
-          changeLevel();
-        }, 1000);
-      }
-    } else {
-      launchError();
-    }
-  };
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      textline.textContent = `Уровень: ${levelCounter}`;
-      makeSequence();
-    }
-  });
-
-  document.addEventListener('click', (e) => {
+  const handleClick = (e) => {
     const userClicked = e.target.id;
     switch (userClicked) {
       case 'green':
@@ -136,8 +98,27 @@ const simonGame = () => {
       default:
         return;
     }
-    checkSequence(userSequence.length - 1);
-  });
+    const indexOfArray = userSequence.length - 1;
+    if (userSequence[indexOfArray] === targetSequence[indexOfArray]) {
+      if (targetSequence.length === userSequence.length) {
+        setTimeout(() => {
+          if (isWin()) {
+            document.removeEventListener('click', handleClick);
+            return;
+          }
+          levelCounter += 1;
+          userSequence = [];
+          continueSequence();
+        }, 2000);
+      }
+    } else {
+      launchError();
+    }
+  };
+
+  document.addEventListener('click', handleClick);
+
+  return isWin;
 };
 
 export default simonGame;

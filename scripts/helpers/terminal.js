@@ -1,13 +1,15 @@
 import Typed from 'typed.js';
 import runPuzzle from './runPuzzle.js';
 
-const allCommands = ['help', 'browse', 'open', 'exit', 'password'];
+const allCommands = ['help', 'browse', 'open', 'exit', 'password', 'id'];
 
 class Terminal {
-  constructor(common, content, state) {
+  constructor(id, common, content, state, accessible) {
+    this.computer_id = id;
     this.common = common;
     this.content = content;
     this.state = state;
+    this.accessible = accessible;
     this.commands = this.state.access === 'granted' ? [...allCommands] : ['password', 'help', 'exit'];
   }
 
@@ -27,21 +29,25 @@ class Terminal {
     }
   }
 
-  type(str) { // нельзя вызывать несколько раз подряд
+  async type(str, readline = 'enable') {
     const messages = str.split('|');
     const typingManager = document.createElement('span');
-    typingManager.setAttribute('id', 'manage_typing');
-    this.terminal.append(typingManager);
+    const typingManagerId = `manage_typing${Math.ceil(Math.random() * 10)}`;
+    typingManager.setAttribute('id', typingManagerId);
+    const wrap = document.createElement('span');
+    wrap.classList.add('bl');
+    wrap.append(typingManager);
+    this.terminal.append(wrap);
     const mElems = messages.map((m) => {
       const span = document.createElement('span');
       span.innerHTML = m;
       span.classList.add('hide');
-      span.classList.add('typed');
+      span.classList.add('bl');
       typingManager.before(span);
       return span;
     });
 
-    return new Typed('#manage_typing', {
+    return new Typed(`#${typingManagerId}`, {
       strings: messages,
       typeSpeed: 50,
       startDelay: 1500,
@@ -57,7 +63,9 @@ class Terminal {
       onComplete: (self) => {
         self.destroy();
         typingManager.remove();
-        this.readline();
+        if (readline === 'enable') {
+          this.readline();
+        }
       },
     });
   }
@@ -83,7 +91,7 @@ class Terminal {
 
   execute(input) {
     const commandRun = document.createElement('span');
-    commandRun.classList.add('typed');
+    commandRun.classList.add('bl');
     commandRun.innerHTML = `>${input}`;
     this.terminal.append(commandRun);
     const [command, prompt] = input.split(' ');
@@ -104,12 +112,20 @@ class Terminal {
     if (!this.state.files.includes(filename)) {
       this.type(this.common.open_failed);
     } else if (filename.startsWith('puzzle')) {
+      const computer = document.getElementById(this.computer_id);
+      const next = computer.getAttribute('password_for');
       if (this.state.puzzle_state === 'solved') {
-        this.type(this.common.no_puzzle.join(this.content.puzzle_solved));
+        this.type(this.common.no_puzzle, 'disable');
+        this.type(this.content.puzzle_solved);
+        if (!this.accessible.includes(next)) {
+          this.accessible.push(next);
+        }
       } else {
-        await runPuzzle(this.state.puzzle, this.terminal);
+        this.type(this.content.puzzle_rules, 'disable');
+        await runPuzzle(this.state.puzzle.function, this.state.puzzle.fieldId, this.terminal);
         this.type(this.content.puzzle_solved);
         this.state.puzzle_state = 'solved';
+        this.accessible.push(next);
       }
     } else if (filename.endsWith('.png')) {
       const img = document.createElement('div');
@@ -124,6 +140,10 @@ class Terminal {
 
   help() {
     this.type(this.common.help);
+  }
+
+  id() {
+    this.type(this.common.get_id);
   }
 
   password(value) {

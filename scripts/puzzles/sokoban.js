@@ -9,7 +9,7 @@ export default function sokoban(field) {
     ' wy  www',
     ' wwwww  ',
   ];
-  const level = [[], [], [], [], [], [], [], []];
+  let level = [[], [], [], [], [], [], [], []];
   let x;
   let y;
   let cell;
@@ -17,17 +17,22 @@ export default function sokoban(field) {
   let forward2cell;
   let div;
 
-  levelData.forEach((row, n) => {
-    row.split('').forEach((square, m) => {
-      level[n].push(div = document.createElement('div'));
-      div.className = square === ' ' ? 's' : square;
-      field.appendChild(div);
-      if (square === 'y') {
-        x = m;
-        y = n;
-      }
+  const buildLevel = () => {
+    levelData.forEach((row, n) => {
+      row.split('').forEach((square, m) => {
+        level[n].push(div = document.createElement('div'));
+        div.className = square === ' ' ? 's' : square;
+        field.appendChild(div);
+        if (square === 'y') {
+          x = m;
+          y = n;
+        }
+      });
     });
-  });
+  };
+
+  buildLevel();
+
   const isWin = () => {
     for (let n = 0; n < level.length; n += 1) {
       for (let m = 0; m < level[n].length; m += 1) {
@@ -38,6 +43,7 @@ export default function sokoban(field) {
     }
     return true;
   };
+
   const handleKeydown = (e) => {
     let dx = 0;
     let dy = 0;
@@ -60,7 +66,11 @@ export default function sokoban(field) {
         break;
       case 'Escape':
         field.replaceChildren();
-        sokoban(field);
+        cell = null;
+        forwardCell = null;
+        forward2cell = null;
+        level = [[], [], [], [], [], [], [], []];
+        buildLevel();
         return;
       default:
         return;
@@ -91,4 +101,3 @@ export default function sokoban(field) {
   window.addEventListener('keydown', handleKeydown);
   return isWin;
 }
-// sokoban();

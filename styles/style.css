@@ -23,7 +23,7 @@ body {
   justify-content: center;
   align-items: center;
 
-  background: center/contain url('/images/generated_location_placeholder.png') no-repeat;
+  background: center/cover url('/images/generated_location_placeholder.png') no-repeat;
 }
 
 #command_line {
@@ -43,15 +43,17 @@ body {
 }
 
 .computers {
+  display: flex;
+  flex-direction: column;
   position: relative;
 
-  height: 600px;
-  width: 800px;
+  height: 75%;
+  width: 60%;
 }
 
 .computer {
-  height: 150px;
-  width: 150px;
+  height: 28%;
+  aspect-ratio: 1/1;
 
   background-repeat: no-repeat;
   background-size: contain;
@@ -59,47 +61,43 @@ body {
   background-image: url('/images/computer_off.png');
 }
 
-.computer:hover {
-  background-image: url('/images/computer_on.png');
-}
-  
 #c1 {
   position: absolute;
-  top: 30px;
-  left: 120px;
+  top: 4%;
+  left: 20%;
 }
 
 #c2 {
   position: absolute;
-  top: 30px;
-  right: 120px;
+  top: 4%;
+  right: 20%;
 }
 
 #c3 {
   position: absolute;
-  right: 40px;
-  bottom: 180px;
+  right: 5%;
+  bottom: 26%;
 }
 
 #c4 {
   position: absolute;
-  bottom: 0px;
-  left: 325px;
+  bottom: -2%;
+  align-self: center;
 }
 
 #c5 {
   position: absolute;
-  bottom: 180px;
-  left: 40px;
+  bottom: 26%;
+  left: 5%;
 }
 
 #main {
-  height: 200px;
-  width: 200px;
+  height: 40%;
+  aspect-ratio: 1/1;
 
   position: absolute;
-  top: 200px;
-  right: 300px;
+  top: 30%;
+  align-self: center;
 }
 
 #img {
@@ -118,16 +116,12 @@ body {
   background-image: url('/images/last_day.png');
 }
 
-.prototype {
-  background-image: url('/images/prototype.png');
-}
-
 .on {
   background-image: url('/images/computer_on.png');
 }
 
-.pos_abs {
-  position: absolute;
+.prototype {
+  background-image: url('/images/prototype.png');
 }
 
 #terminal {
@@ -139,14 +133,16 @@ body {
 
 #terminal_content {
   position: absolute;
-  top: 140px;
-  right: 190px;
-  bottom: 140px;
-  left: 180px;
+  top: 120px;
+  right: 170px;
+  bottom: 120px;
+  left: 160px;
+
   overflow-y: auto;
+  padding: 30px;
 }
 
-.typed {
+.bl {
   display: block;
 }
 
@@ -160,6 +156,11 @@ body {
   display: none;
 }
 
+.error {
+  background-color: red;
+  opacity: 60%;
+}
+
 .s { background: white; }
 .w { background: black; }
 .b { background: blue; }
@@ -167,13 +168,8 @@ body {
 .a { background: red; }
 .y, .Y { background: green; }
 
-#field div { width: 20px; height: 20px; float: left; }
-#field {width: 160px; height: 160px; border: thin solid black;}
-
-.textline {
-  color: white;
-  margin-left: 20px;
-}
+#fieldSokoban div { width: 20px; height: 20px; float: left; }
+#fieldSokoban {width: 160px; height: 160px; border: thin solid black;}
 
 #fieldSimon {
   width: 300px;
