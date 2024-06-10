@@ -105,10 +105,11 @@ class Terminal {
       this.type(this.common.open_failed);
     } else if (filename.startsWith('puzzle')) {
       if (this.state.puzzle_state === 'solved') {
-        this.type(this.common.no_puzzle);
+        this.type(this.common.no_puzzle.join(this.content.puzzle_solved));
       } else {
         await runPuzzle(this.state.puzzle, this.terminal);
         this.type(this.content.puzzle_solved);
+        this.state.puzzle_state = 'solved';
       }
     } else if (filename.endsWith('.png')) {
       const img = document.createElement('div');
