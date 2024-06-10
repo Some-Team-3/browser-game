@@ -69,7 +69,9 @@ const simonGame = (fieldSimon) => {
     terminal.classList.add('error');
     setTimeout(() => {
       terminal.classList.remove('error');
-      resetGame();
+      setTimeout(() => {
+        resetGame();
+      }, 1000);
     }, 1500);
   };
 
@@ -109,7 +111,7 @@ const simonGame = (fieldSimon) => {
           levelCounter += 1;
           userSequence = [];
           continueSequence();
-        }, 2000);
+        }, 1600);
       }
     } else {
       launchError();
@@ -117,6 +119,9 @@ const simonGame = (fieldSimon) => {
   };
 
   document.addEventListener('click', handleClick);
+  setTimeout(() => {
+    continueSequence();
+  }, 5000);
 
   return isWin;
 };
