@@ -3,10 +3,18 @@ import Terminal from './helpers/terminal.js';
 import ru from '../locales/lng.js';
 import sokoban from './puzzles/sokoban.js';
 import simonGame from './puzzles/simonGame.js';
-import slidingPuzzle from './puzzles/slidingPuzzle.js';
+// import slidingPuzzle from './puzzles/slidingPuzzle.js';
 
 const game = document.getElementById('game');
 const computers = [...document.getElementsByClassName('computer')];
+
+const puzzlePlaceholder = () => {
+  let result = false;
+  setTimeout(() => {
+    result = true;
+  });
+  return () => result;
+};
 
 const state = {
   possessed: ['c1'],
@@ -14,7 +22,7 @@ const state = {
     access: 'granted',
     loading: 'run',
     password: null,
-    files: ['th0ught$1', 'puzzle_broken', 'laborotory.png', 'log_1'],
+    files: ['th0ught$1', 'puzzle_?1%', 'laborotory.png', 'log_1'],
     puzzle: {
       function: null,
       fieldId: null,
@@ -25,7 +33,7 @@ const state = {
     access: 'denied',
     loading: 'run',
     password: '130',
-    files: ['th0ught$2', 'puzzle_1', 'log_2'],
+    files: ['th0ught$2', 'puzzle_2', 'log_2'],
     puzzle: {
       function: simonGame,
       fieldId: 'fieldSimon',
@@ -36,7 +44,7 @@ const state = {
     access: 'denied',
     loading: 'run',
     password: '0104',
-    files: ['th0ught$3', 'log_3', 'puzzle_2', 'prototype.png'],
+    files: ['th0ught$3', 'log_3', 'puzzle_3', 'prototype.png'],
     puzzle: {
       function: sokoban,
       fieldId: 'fieldSokoban',
@@ -47,9 +55,9 @@ const state = {
     access: 'denied',
     loading: 'run',
     password: '3007',
-    files: ['th0ught$4', 'log_4', 'err0r', 'puzzle_3', 'note'],
+    files: ['th0ught$4', 'log_4', 'err0r', 'puzzle_4', 'note'],
     puzzle: {
-      function: slidingPuzzle,
+      function: puzzlePlaceholder,
       fieldId: 'fieldSlidingPuzzle',
     },
     puzzle_state: 'not solved',
@@ -58,7 +66,7 @@ const state = {
     access: 'denied',
     loading: 'run',
     password: '4341',
-    files: ['th0ught$5', 'last_day.png', 'warning', 'puzzle_4'],
+    files: ['th0ught$5', 'last_day.png', 'warning', 'puzzle_5'],
     puzzle: {
       function: simonGame,
       fieldId: 'fieldSimon',
