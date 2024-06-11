@@ -16,7 +16,7 @@ class Terminal {
   run(container) {
     const terminal = document.createElement('div');
     const terminalContent = document.createElement('div');
-    this.terminal = terminalContent;
+    this.container = terminalContent;
     terminal.setAttribute('id', 'terminal');
     terminalContent.setAttribute('id', 'terminal_content');
     terminal.append(terminalContent);
@@ -37,7 +37,7 @@ class Terminal {
     const wrap = document.createElement('span');
     wrap.classList.add('bl');
     wrap.append(typingManager);
-    this.terminal.append(wrap);
+    this.container.append(wrap);
     const mElems = messages.map((m) => {
       const span = document.createElement('span');
       span.innerHTML = m;
@@ -59,6 +59,7 @@ class Terminal {
       onStringTyped: (arrayPos) => {
         typingManager.classList.add('hide');
         mElems[arrayPos].classList.remove('hide');
+        this.container.scrollTop = this.container.scrollHeight;
       },
       onComplete: (self) => {
         self.destroy();
@@ -75,6 +76,7 @@ class Terminal {
     const label = document.createElement('label');
     input.setAttribute('id', 'command_line_input');
     input.setAttribute('type', 'text');
+    input.setAttribute('spellcheck', 'false');
     input.addEventListener('keydown', ({ code, target }) => {
       if (code === 'Enter') {
         const command = target.value;
@@ -85,7 +87,8 @@ class Terminal {
     label.setAttribute('id', 'command_line');
     label.innerHTML = '>';
     label.append(input);
-    this.terminal.append(label);
+    this.container.append(label);
+    this.container.scrollTop = this.container.scrollHeight;
     input.focus();
   }
 
@@ -93,7 +96,7 @@ class Terminal {
     const commandRun = document.createElement('span');
     commandRun.classList.add('bl');
     commandRun.innerHTML = `>${input}`;
-    this.terminal.append(commandRun);
+    this.container.append(commandRun);
     const [command, prompt] = input.split(' ');
     if (!allCommands.includes(command)) {
       this.type(this.common.command_failed);
@@ -122,7 +125,7 @@ class Terminal {
         }
       } else {
         this.type(this.content.puzzle_rules, 'disable');
-        await runPuzzle(this.state.puzzle.function, this.state.puzzle.fieldId, this.terminal);
+        await runPuzzle(this.state.puzzle.function, this.state.puzzle.fieldId, this.container);
         this.type(this.content.puzzle_solved);
         this.state.puzzle_state = 'solved';
         this.accessible.push(next);
@@ -131,8 +134,17 @@ class Terminal {
       const img = document.createElement('div');
       img.setAttribute('id', 'img');
       img.classList.add(filename.slice(0, -4));
-      this.terminal.append(img);
+      this.container.append(img);
       this.readline();
+    } else if (this.computer_id === 'main') {
+      this.type(this.content.files[filename], 'disable');
+      setTimeout(() => {
+        this.exit();
+        const boom = document.createElement('div');
+        boom.classList.add('bboom');
+        document.body.append(boom);
+        boom.classList.add('boom');
+      }, 4000);
     } else {
       this.type(this.content.files[filename]);
     }
@@ -159,7 +171,7 @@ class Terminal {
   }
 
   exit() {
-    this.terminal.parentElement.remove();
+    this.container.parentElement.remove();
   }
 }
 
