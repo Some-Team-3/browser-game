@@ -100,9 +100,11 @@ body {
   align-self: center;
 }
 
-#img {
+#image {
   height: 300px;
+  max-height: 50%;
   width: 400px;
+  max-width: 80%;
 
   background-repeat: no-repeat;
   background-size: contain;
@@ -126,22 +128,21 @@ body {
 
 #terminal {
   position: absolute;
-  height: 90%;
-  width: 75%;
-  background: center/contain url('/images/screen_placeholder.png') no-repeat;
+  height: 80%;
+  aspect-ratio: 903/670;
+
+  background: center/contain url('/images/screen.png') no-repeat;
 }
 
 #terminal_content {
-  position: absolute;
-  top: 16%;
-  right: 18.5%;
-  bottom: 16.2%;
-  left: 17.3%;
+  max-height: 68%;
+  max-width: 80%;
+  margin: 12%;
 
-  margin: 3%;
-
-  overflow-y: auto;
+  overflow-y: scroll;
   scrollbar-width: none;
+
+  box-sizing: border-box;
 }
 
 .bl {

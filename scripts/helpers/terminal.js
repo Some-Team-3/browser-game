@@ -108,7 +108,7 @@ class Terminal {
   }
 
   browse() {
-    this.type(this.content.files.browse);
+    this.type(this.state.files.join(' '));
   }
 
   async open(filename) {
@@ -132,7 +132,7 @@ class Terminal {
       }
     } else if (filename.endsWith('.png')) {
       const img = document.createElement('div');
-      img.setAttribute('id', 'img');
+      img.setAttribute('id', 'image');
       img.classList.add(filename.slice(0, -4));
       this.container.append(img);
       this.readline();
