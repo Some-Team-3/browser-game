@@ -126,6 +126,10 @@ body {
   background-image: url('/images/prototype.png');
 }
 
+.price {
+  background-image: url('/images/slidingPuzzle.png');
+}
+
 #terminal {
   position: absolute;
   height: 80%;

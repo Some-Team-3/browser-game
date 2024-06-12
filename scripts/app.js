@@ -1,21 +1,13 @@
 import i18next from 'i18next';
 import Terminal from './helpers/terminal.js';
 import ru from '../locales/lng.js';
-import sokoban from './puzzles/sokoban.js';
 import simonGame from './puzzles/simonGame.js';
-// import slidingPuzzle from './puzzles/slidingPuzzle.js';
+import sokoban from './puzzles/sokoban.js';
+import slidingPuzzle from './puzzles/slidingPuzzle.js';
 import wordle from './puzzles/wordle.js';
 
 const game = document.getElementById('game');
 const computers = [...document.getElementsByClassName('computer')];
-
-const puzzlePlaceholder = () => {
-  let result = false;
-  setTimeout(() => {
-    result = true;
-  });
-  return () => result;
-};
 
 const state = {
   possessed: ['c1'],
@@ -58,7 +50,7 @@ const state = {
     password: '3007',
     files: ['th0ught$4', 'log_4', 'err0r', 'puzzle_4', 'note'],
     puzzle: {
-      function: puzzlePlaceholder,
+      function: slidingPuzzle,
       fieldId: 'fieldSlidingPuzzle',
     },
     puzzle_state: 'not solved',
