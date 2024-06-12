@@ -4,6 +4,7 @@ import ru from '../locales/lng.js';
 import sokoban from './puzzles/sokoban.js';
 import simonGame from './puzzles/simonGame.js';
 // import slidingPuzzle from './puzzles/slidingPuzzle.js';
+import wordle from './puzzles/wordle.js';
 
 const game = document.getElementById('game');
 const computers = [...document.getElementsByClassName('computer')];
@@ -68,8 +69,8 @@ const state = {
     password: '4341',
     files: ['th0ught$5', 'last_day.png', 'warning', 'puzzle_5'],
     puzzle: {
-      function: simonGame,
-      fieldId: 'fieldSimon',
+      function: wordle,
+      fieldId: 'fieldWordle',
     },
     puzzle_state: 'not solved',
   },

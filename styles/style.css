@@ -189,6 +189,43 @@ body {
   }
 }
 
+#fieldWordle {
+  font-size: 24px;
+
+  width: fit-content;
+  
+  display: flex;
+  flex-direction: column;
+}
+
+.wordle_row {
+  display: flex;
+  border: transparent 1px solid;
+}
+
+.wordle_square {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: white 1px solid;
+}
+
+.present {
+  background-color: white;
+}
+
+.wrong {
+  background-color: gray;
+}
+
+.correct {
+  background-color: purple;
+}
+
 .s { background: white; }
 .w { background: black; }
 .b { background: blue; }
