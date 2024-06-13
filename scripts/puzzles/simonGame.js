@@ -53,7 +53,7 @@ const simonGame = (fieldSimon) => {
     });
   };
 
-  const isWin = () => levelCounter === 5 && userSequence.length === 5;
+  const isWin = () => levelCounter === 5 && targetSequence.join('') === userSequence.join('');
 
   const resetGame = () => {
     userSequence = [];
@@ -65,10 +65,9 @@ const simonGame = (fieldSimon) => {
   };
 
   const launchError = () => {
-    const terminal = document.getElementById('terminal_content');
-    terminal.classList.add('error');
+    fieldSimon.classList.add('error');
     setTimeout(() => {
-      terminal.classList.remove('error');
+      fieldSimon.classList.remove('error');
       setTimeout(() => {
         resetGame();
       }, 1000);

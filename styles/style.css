@@ -108,8 +108,8 @@ body {
   background-size: contain;
 }
 
-.laborotory {
-  background-image: url('/images/laborotory.png');
+.laboratory {
+  background-image: url('/images/laboratory.png');
 }
 
 .last_day {
@@ -162,7 +162,7 @@ body {
 }
 
 .error {
-  background-color: red;
+  background-color: red !important;
   opacity: 60%;
 }
 

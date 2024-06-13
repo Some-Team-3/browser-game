@@ -15,7 +15,7 @@ const state = {
     access: 'granted',
     loading: 'run',
     password: null,
-    files: ['th0ught$1', 'puzzle_?1+', 'laborotory.png', 'log_1'],
+    files: ['th0ught$1', 'puzzle_?1+', 'laboratory.png', 'log_1'],
     puzzle: {
       function: null,
       fieldId: null,
