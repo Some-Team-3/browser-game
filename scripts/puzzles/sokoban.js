@@ -1,4 +1,4 @@
-export default function sokoban(field) {
+export default function sokoban(field, { slideSound }) {
   const levelData = [ // w - стена; b - ящик; p - место для ящика;  y - игрок
     '  wwwww ',
     'www   w ',
@@ -49,18 +49,22 @@ export default function sokoban(field) {
     let dy = 0;
     switch (e.key) {
       case 'ArrowLeft':
+        slideSound.play();
         dx = -1;
         dy = 0;
         break;
       case 'ArrowRight':
+        slideSound.play();
         dx = 1;
         dy = 0;
         break;
       case 'ArrowUp':
+        slideSound.play();
         dx = 0;
         dy = -1;
         break;
       case 'ArrowDown':
+        slideSound.play();
         dx = 0;
         dy = 1;
         break;

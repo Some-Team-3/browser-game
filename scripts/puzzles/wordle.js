@@ -18,7 +18,7 @@ const processAttempt = (attempt, answer) => {
   });
 };
 
-export default (field) => {
+export default (field, sounds) => {
   const letters = 'абвгдеёжзиклмнопрстуфхцчщшьыъэюя'.split('');
   const word = 'вирус';
   const level = Array(6).fill(0).map(() => Array(5).fill(''));
@@ -54,6 +54,7 @@ export default (field) => {
   const isWin = () => attempt === word;
 
   const handleKeydown = (e) => {
+    sounds.clickSound.play();
     const currRow = field.querySelector(`[rowIndex="${attemptRowI}"]`);
     let currSquare = currRow.querySelector(`[squareIndex="${attemptElI}"]`);
     if (letters.includes(e.key)) {
@@ -65,7 +66,7 @@ export default (field) => {
     } else if (e.key === 'Enter') {
       if (curr[attemptRowI].includes('')) {
         currRow.classList.add('error');
-        errorSoundEl.play();
+        sounds.errSound.play();
         setTimeout(() => {
           currRow.classList.remove('error');
         }, 1500);

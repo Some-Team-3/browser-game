@@ -1,20 +1,17 @@
 import Typed from 'typed.js';
 import runPuzzle from './runPuzzle.js';
-import makeSound from './makeSound.js';
-import terminalClose from '../../sounds/terminalOFF.mp3';
-import finalSound from '../../sounds/finalSound.mp3';
-import finalMusic from '../../sounds/final.mp3';
 
 const allCommands = ['help', 'browse', 'open', 'exit', 'password', 'id'];
 
 class Terminal {
-  constructor(id, common, content, state, accessible) {
+  constructor(id, common, content, state, accessible, sounds) {
     this.computer_id = id;
     this.common = common;
     this.content = content;
     this.state = state;
     this.accessible = accessible;
     this.commands = this.state.access === 'granted' ? [...allCommands] : ['password', 'help', 'exit'];
+    this.sounds = sounds;
   }
 
   run(container) {
@@ -129,7 +126,17 @@ class Terminal {
         }
       } else {
         this.type(this.content.puzzle_rules, 'disable');
-        await runPuzzle(this.state.puzzle.function, this.state.puzzle.fieldId, this.container);
+        const {
+          errSound, clickSound, sSound1, sSound2, sSound3, sSound4, slideSound,
+        } = this.sounds;
+        await runPuzzle(
+          this.state.puzzle.function,
+          this.state.puzzle.fieldId,
+          this.container,
+          {
+            errSound, clickSound, sSound1, sSound2, sSound3, sSound4, slideSound,
+          },
+        );
         this.type(this.content.puzzle_solved);
         this.state.puzzle_state = 'solved';
         this.accessible.push(next);
@@ -148,15 +155,8 @@ class Terminal {
         boom.classList.add('bboom');
         document.body.append(boom);
         boom.classList.add('boom');
-        const backMusicEl = document.getElementById('backMusic');
-        backMusicEl.remove();
-        const finalSoundEl = makeSound(finalSound);
-        finalSoundEl.play();
-        finalSoundEl.remove();
-        const finalMusicEl = makeSound(finalMusic, [['loop', 'loop']]);
-        setTimeout(() => {
-          finalMusicEl.play();
-        }, 8000);
+        this.sounds.backMusic.remove();
+        this.sounds.finalMusic.play();
       }, 4000);
     } else {
       this.type(this.content.files[filename]);
@@ -184,9 +184,7 @@ class Terminal {
   }
 
   exit() {
-    const closeSound = makeSound(terminalClose);
-    closeSound.play();
-    closeSound.remove();
+    this.sounds.closeSound.play();
     this.container.parentElement.remove();
   }
 }

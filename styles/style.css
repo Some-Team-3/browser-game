@@ -141,10 +141,13 @@ body {
   max-width: 80%;
   margin: 12%;
 
-  overflow-y: scroll;
-  scrollbar-width: none;
+  overflow-y: auto;
 
   box-sizing: border-box;
+}
+
+#terminal_content::-webkit-scrollbar {
+  visibility: hidden;
 }
 
 .bl {

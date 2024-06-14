@@ -1,4 +1,4 @@
-const slidingPuzzle = (container) => {
+const slidingPuzzle = (container, { slideSound }) => {
   const size = 3;
   let emptyIndex = size * size - 1;
   const shuffledTiles = [4, 3, 1, 8, 2, 5, 7, 6];
@@ -31,6 +31,7 @@ const slidingPuzzle = (container) => {
         tile.classList.add('empty');
       }
       const handleClick = () => {
+        slideSound.play();
         if (checkExchange(index, emptyIndex)) {
           [shuffledTiles[index], shuffledTiles[emptyIndex],
           ] = [shuffledTiles[emptyIndex], shuffledTiles[index]];
