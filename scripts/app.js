@@ -6,6 +6,8 @@ import sokoban from './puzzles/sokoban.js';
 import slidingPuzzle from './puzzles/slidingPuzzle.js';
 import wordle from './puzzles/wordle.js';
 import backgroundMusic from '../sounds/backgroundSound.mp3';
+import terminalOpen from '../sounds/terminalON.mp3';
+import makeSound from './helpers/makeSound.js';
 
 const game = document.getElementById('game');
 const computers = [...document.getElementsByClassName('computer')];
@@ -71,7 +73,7 @@ const state = {
     access: 'denied',
     loading: 'run',
     password: '04061',
-    files: ['D0_Y0U_R3M3MB3R'],
+    files: ['final_th0ught$', 'D0_Y0U_R3M3MB3R'],
     puzzle: {
       function: null,
       fieldId: null,
@@ -90,19 +92,17 @@ export default () => {
     },
   });
 
-  const backMusicEl = new Audio(backgroundMusic);
-  backMusicEl.setAttribute('loop', 'loop');
-  game.append(backMusicEl);
+  const backMusicEl = makeSound(game, backgroundMusic, [['loop', 'loop'], ['id', 'backMusic']]);
 
-  const playMusic = () => {
+  window.onload = setTimeout(() => {
     backMusicEl.play();
-    document.removeEventListener('DOMContentLoaded', playMusic);
-  };
+  }, 1000);
 
-  document.addEventListener('DOMContentLoaded', playMusic);
+  const openSound = makeSound(game, terminalOpen);
 
   computers.forEach((computer) => {
     computer.addEventListener('click', ({ target }) => {
+      openSound.play();
       const { id } = target;
       if (state.possessed.includes(id)) {
         const terminal = new Terminal(

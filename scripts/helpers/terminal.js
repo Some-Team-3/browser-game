@@ -1,5 +1,9 @@
 import Typed from 'typed.js';
 import runPuzzle from './runPuzzle.js';
+import makeSound from './makeSound.js';
+import terminalClose from '../../sounds/terminalOFF.mp3';
+import finalSound from '../../sounds/finalSound.mp3';
+import finalMusic from '../../sounds/final.mp3';
 
 const allCommands = ['help', 'browse', 'open', 'exit', 'password', 'id'];
 
@@ -136,7 +140,7 @@ class Terminal {
       img.classList.add(filename.slice(0, -4));
       this.container.append(img);
       this.readline();
-    } else if (this.computer_id === 'main') {
+    } else if (this.computer_id === 'main' && filename === 'D0_Y0U_R3M3MB3R') {
       this.type(this.content.files[filename], 'disable');
       setTimeout(() => {
         this.exit();
@@ -144,6 +148,15 @@ class Terminal {
         boom.classList.add('bboom');
         document.body.append(boom);
         boom.classList.add('boom');
+        const backMusicEl = document.getElementById('backMusic');
+        backMusicEl.remove();
+        const finalSoundEl = makeSound(finalSound);
+        finalSoundEl.play();
+        finalSoundEl.remove();
+        const finalMusicEl = makeSound(finalMusic, [['loop', 'loop']]);
+        setTimeout(() => {
+          finalMusicEl.play();
+        }, 8000);
       }, 4000);
     } else {
       this.type(this.content.files[filename]);
@@ -171,6 +184,9 @@ class Terminal {
   }
 
   exit() {
+    const closeSound = makeSound(terminalClose);
+    closeSound.play();
+    closeSound.remove();
     this.container.parentElement.remove();
   }
 }

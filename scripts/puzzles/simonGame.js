@@ -1,3 +1,16 @@
+import makeSound from '../helpers/makeSound.js';
+import simon1 from '../../sounds/simonSound1.mp3';
+import simon2 from '../../sounds/simonSound2.mp3';
+import simon3 from '../../sounds/simonSound3.mp3';
+import simon4 from '../../sounds/simonSound4.mp3';
+import errorSound from '../../sounds/error.mp3';
+
+const sSoundEl1 = makeSound(simon1);
+const sSoundEl2 = makeSound(simon2);
+const sSoundEl3 = makeSound(simon3);
+const sSoundEl4 = makeSound(simon4);
+const errorSoundEl = makeSound(errorSound);
+
 const simonGame = (fieldSimon) => {
   const targetSequence = [];
   let userSequence = [];
@@ -15,24 +28,28 @@ const simonGame = (fieldSimon) => {
     switch (element) {
       case 1:
         document.querySelector('#green').classList.add('light');
+        sSoundEl1.play();
         setTimeout(() => {
           document.querySelector('#green').classList.remove('light');
         }, 250);
         break;
       case 2:
         document.querySelector('#red').classList.add('light');
+        sSoundEl2.play();
         setTimeout(() => {
           document.querySelector('#red').classList.remove('light');
         }, 250);
         break;
       case 3:
         document.querySelector('#yellow').classList.add('light');
+        sSoundEl3.play();
         setTimeout(() => {
           document.querySelector('#yellow').classList.remove('light');
         }, 250);
         break;
       case 4:
         document.querySelector('#blue').classList.add('light');
+        sSoundEl4.play();
         setTimeout(() => {
           document.querySelector('#blue').classList.remove('light');
         }, 250);
@@ -66,6 +83,7 @@ const simonGame = (fieldSimon) => {
 
   const launchError = () => {
     fieldSimon.classList.add('error');
+    errorSoundEl.play();
     setTimeout(() => {
       fieldSimon.classList.remove('error');
       setTimeout(() => {
@@ -105,6 +123,11 @@ const simonGame = (fieldSimon) => {
         setTimeout(() => {
           if (isWin()) {
             document.removeEventListener('click', handleClick);
+            sSoundEl1.remove();
+            sSoundEl2.remove();
+            sSoundEl3.remove();
+            sSoundEl4.remove();
+            errorSoundEl.remove();
             return;
           }
           levelCounter += 1;

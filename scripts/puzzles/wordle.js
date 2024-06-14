@@ -1,3 +1,8 @@
+import makeSound from '../helpers/makeSound.js';
+import errorSound from '../../sounds/error.mp3';
+
+const errorSoundEl = makeSound(errorSound);
+
 const processAttempt = (attempt, answer) => {
   const letters = [...attempt];
   let remain = answer;
@@ -60,6 +65,7 @@ export default (field) => {
     } else if (e.key === 'Enter') {
       if (curr[attemptRowI].includes('')) {
         currRow.classList.add('error');
+        errorSoundEl.play();
         setTimeout(() => {
           currRow.classList.remove('error');
         }, 1500);
@@ -78,6 +84,7 @@ export default (field) => {
       });
       if (isWin()) {
         window.removeEventListener('keydown', handleKeydown);
+        errorSoundEl.remove();
         field.click();
       }
       attemptRowI += 1;
