@@ -9,12 +9,17 @@ module.exports = {
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-        type: 'asset',
+        type: 'asset/resource',
+      },
+      {
+        test: /\.mp3$/,
+        loader: 'file-loader',
       },
     ],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
+    assetModuleFilename: 'assets/[hash][ext][query]',
   },
   plugins: [
     new HtmlWebpackPlugin({
