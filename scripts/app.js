@@ -5,12 +5,13 @@ import simonGame from './puzzles/simonGame.js';
 import sokoban from './puzzles/sokoban.js';
 import slidingPuzzle from './puzzles/slidingPuzzle.js';
 import wordle from './puzzles/wordle.js';
+import backgroundMusic from '../sounds/backgroundSound.mp3';
 
 const game = document.getElementById('game');
 const computers = [...document.getElementsByClassName('computer')];
 
 const state = {
-  possessed: ['c1'],
+  possessed: ['c1', 'c2', 'c3', 'c4', 'c5'],
   c1: {
     access: 'granted',
     loading: 'run',
@@ -23,7 +24,7 @@ const state = {
     puzzle_state: 'solved',
   },
   c2: {
-    access: 'denied',
+    access: 'granted',
     loading: 'run',
     password: '130',
     files: ['th0ught$2', 'puzzle_2', 'log_2'],
@@ -34,7 +35,7 @@ const state = {
     puzzle_state: 'not solved',
   },
   c3: {
-    access: 'denied',
+    access: 'granted',
     loading: 'run',
     password: '0104',
     files: ['th0ught$3', 'log_3', 'puzzle_3', 'prototype.png'],
@@ -45,7 +46,7 @@ const state = {
     puzzle_state: 'not solved',
   },
   c4: {
-    access: 'denied',
+    access: 'granted',
     loading: 'run',
     password: '3007',
     files: ['th0ught$4', 'log_4', 'err0r', 'puzzle_4', 'note'],
@@ -56,7 +57,7 @@ const state = {
     puzzle_state: 'not solved',
   },
   c5: {
-    access: 'denied',
+    access: 'granted',
     loading: 'run',
     password: '4341',
     files: ['th0ught$5', 'last_day.png', 'warning', 'puzzle_5'],
@@ -88,6 +89,17 @@ export default () => {
       ru,
     },
   });
+
+  const backMusicEl = new Audio(backgroundMusic);
+  backMusicEl.setAttribute('loop', 'loop');
+  game.append(backMusicEl);
+
+  const playMusic = () => {
+    backMusicEl.play();
+    document.removeEventListener('DOMContentLoaded', playMusic);
+  };
+
+  document.addEventListener('DOMContentLoaded', playMusic);
 
   computers.forEach((computer) => {
     computer.addEventListener('click', ({ target }) => {
