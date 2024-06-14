@@ -39,10 +39,10 @@ slideSound.volume = 0.6;
 slideSound.playbackRate = 1.5;
 
 const state = {
-  possessed: ['c1', 'c2', 'c3', 'c4', 'c5', 'main'],
+  possessed: ['c1'],
   c1: {
     access: 'granted',
-    loading: 'rnun',
+    loading: 'run',
     password: null,
     files: ['th0ught$1', 'puzzle_?1+', 'laboratory.png', 'log_1'],
     puzzle: {
@@ -52,8 +52,8 @@ const state = {
     puzzle_state: 'solved',
   },
   c2: {
-    access: 'granted',
-    loading: 'rnun',
+    access: 'denied',
+    loading: 'run',
     password: '130',
     files: ['th0ught$2', 'puzzle_2', 'log_2'],
     puzzle: {
@@ -63,8 +63,8 @@ const state = {
     puzzle_state: 'not solved',
   },
   c3: {
-    access: 'granted',
-    loading: 'rnun',
+    access: 'denied',
+    loading: 'run',
     password: '0104',
     files: ['th0ught$3', 'log_3', 'puzzle_3', 'prototype.png'],
     puzzle: {
@@ -74,8 +74,8 @@ const state = {
     puzzle_state: 'not solved',
   },
   c4: {
-    access: 'granted',
-    loading: 'rnun',
+    access: 'denied',
+    loading: 'run',
     password: '3007',
     files: ['th0ught$4', 'log_4', 'err0r', 'puzzle_4', 'note'],
     puzzle: {
@@ -85,8 +85,8 @@ const state = {
     puzzle_state: 'not solved',
   },
   c5: {
-    access: 'granted',
-    loading: 'rnun',
+    access: 'denied',
+    loading: 'run',
     password: '4341',
     files: ['th0ught$5', 'last_day.png', 'warning', 'puzzle_5'],
     puzzle: {
@@ -96,8 +96,8 @@ const state = {
     puzzle_state: 'not solved',
   },
   main: {
-    access: 'granted',
-    loading: 'rnun',
+    access: 'denied',
+    loading: 'run',
     password: '04061',
     files: ['final_th0ught$', 'D0_Y0U_R3M3MB3R'],
     puzzle: {
