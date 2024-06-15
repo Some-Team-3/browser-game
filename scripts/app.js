@@ -36,7 +36,7 @@ const slideSound = makeSound(slide);
 const errSound = makeSound(errorSound);
 
 const state = {
-  possessed: ['c1', 'main'],
+  possessed: ['c1'],
   c1: {
     access: 'granted',
     loading: 'run',
@@ -93,8 +93,8 @@ const state = {
     puzzle_state: 'not solved',
   },
   main: {
-    access: 'granted',
-    loading: 'rnun',
+    access: 'denied',
+    loading: 'run',
     password: '04061',
     files: ['final_th0ught$', 'D0_Y0U_R3M3MB3R'],
     puzzle: {
