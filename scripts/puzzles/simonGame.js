@@ -2,70 +2,52 @@ const simonGame = (fieldSimon, sounds) => {
   const targetSequence = [];
   let userSequence = [];
   let levelCounter = 1;
-  let randomNumber;
+  let randomColorI;
+  let showQueue = [];
 
   const colors = ['green', 'red', 'yellow', 'blue'];
-  for (let k = 0; k < colors.length; k += 1) {
+  const buttons = colors.reduce((acc, color) => {
     const button = document.createElement('div');
-    button.setAttribute('id', `${colors[k]}`);
-    fieldSimon.appendChild(button);
-  }
+    button.setAttribute('id', color);
+    fieldSimon.append(button);
+    return { ...acc, [color]: button };
+  }, {});
+  const buttonSounds = {
+    green: sounds.sSound1,
+    red: sounds.sSound2,
+    yellow: sounds.sSound3,
+    blue: sounds.sSound4,
+  };
 
-  const showSequence = (element) => {
-    switch (element) {
-      case 1:
-        document.querySelector('#green').classList.add('light');
-        sounds.sSound1.play();
-        setTimeout(() => {
-          document.querySelector('#green').classList.remove('light');
-        }, 250);
-        break;
-      case 2:
-        document.querySelector('#red').classList.add('light');
-        sounds.sSound2.play();
-        setTimeout(() => {
-          document.querySelector('#red').classList.remove('light');
-        }, 250);
-        break;
-      case 3:
-        document.querySelector('#yellow').classList.add('light');
-        sounds.sSound3.play();
-        setTimeout(() => {
-          document.querySelector('#yellow').classList.remove('light');
-        }, 250);
-        break;
-      case 4:
-        document.querySelector('#blue').classList.add('light');
-        sounds.sSound4.play();
-        setTimeout(() => {
-          document.querySelector('#blue').classList.remove('light');
-        }, 250);
-        break;
-      default:
-        break;
-    }
+  const showSequenceItem = (element) => {
+    buttons[element].classList.add('light');
+    buttonSounds[element].play();
+    setTimeout(() => {
+      buttons[element].classList.remove('light');
+    }, 250);
+  };
+
+  const showSequence = () => {
+    showQueue.forEach((timeoutId) => clearTimeout(timeoutId));
+    showQueue = [];
+    targetSequence.forEach((item, index) => {
+      showQueue.push(setTimeout(() => {
+        showSequenceItem(item);
+      }, index * 1300));
+    });
   };
 
   const continueSequence = () => {
-    randomNumber = Math.ceil(Math.random() * 4);
-    targetSequence.push(randomNumber);
-
-    targetSequence.forEach((item, index) => {
-      setTimeout(() => {
-        showSequence(item);
-      }, index * 1400);
-    });
+    randomColorI = Math.floor(Math.random() * 4);
+    targetSequence.push(colors[randomColorI]);
+    showSequence();
   };
 
   const isWin = () => levelCounter === 5 && targetSequence.join('') === userSequence.join('');
 
   const resetGame = () => {
     userSequence = [];
-    targetSequence.forEach((item, index) => {
-      setTimeout(() => {
-        showSequence(item);
-      }, index * 1400);
-    });
+    showSequence();
   };
 
   const launchError = () => {
@@ -79,39 +61,20 @@ const simonGame = (fieldSimon, sounds) => {
     }, 1500);
   };
 
-  const handleClick = (e) => {
-    const userClicked = e.target.id;
-    switch (userClicked) {
-      case 'green':
-        userSequence.push(1);
-        showSequence(1);
-        break;
-
-      case 'red':
-        userSequence.push(2);
-        showSequence(2);
-        break;
-
-      case 'yellow':
-        userSequence.push(3);
-        showSequence(3);
-        break;
-
-      case 'blue':
-        userSequence.push(4);
-        showSequence(4);
-        break;
-      default:
-        return;
-    }
-    const indexOfArray = userSequence.length - 1;
-    if (userSequence[indexOfArray] === targetSequence[indexOfArray]) {
+  const handleClick = ({ target }) => {
+    const userClicked = target.id;
+    showSequenceItem(userClicked);
+    const indexOfArray = userSequence.length;
+    if (userClicked === targetSequence[indexOfArray]) {
+      userSequence.push(userClicked);
       if (targetSequence.length === userSequence.length) {
+        if (isWin()) {
+          Object.values(buttons).forEach((button) => {
+            button.removeEventListener('click', handleClick);
+          });
+          return;
+        }
         setTimeout(() => {
-          if (isWin()) {
-            document.removeEventListener('click', handleClick);
-            return;
-          }
           levelCounter += 1;
           userSequence = [];
           continueSequence();
@@ -122,7 +85,9 @@ const simonGame = (fieldSimon, sounds) => {
     }
   };
 
-  document.addEventListener('click', handleClick);
+  Object.values(buttons).forEach((button) => {
+    button.addEventListener('click', handleClick);
+  });
   setTimeout(() => {
     continueSequence();
   }, 5000);

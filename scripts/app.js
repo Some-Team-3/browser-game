@@ -117,7 +117,7 @@ export default () => {
 
   document.addEventListener('DOMContentLoaded', () => {
     backMusic.volume = 0.1;
-    errSound.volume = 0.2;
+    errSound.volume = 0.1;
     clickSound.volume = 0.7;
     clickSound.playbackRate = 2;
     slideSound.volume = 0.2;
