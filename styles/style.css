@@ -303,3 +303,25 @@ body {
   background: none;
   border: none;
 }
+
+#music_toggle {
+  min-height: 50px;
+  height: 11%;
+  aspect-ratio: 1/1;
+
+  position: absolute;
+  top: 5%;
+  left: 5%;
+
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.music_on {
+  background-image: url('../images/backMusic_disable.png'), radial-gradient(farthest-side, #5bf870, transparent);
+}
+
+.music_off {
+  background-image: url('../images/backMusic_enable.png'), radial-gradient(farthest-side, #5bf870, transparent);
+}

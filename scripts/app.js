@@ -5,6 +5,7 @@ import simonGame from './puzzles/simonGame.js';
 import sokoban from './puzzles/sokoban.js';
 import slidingPuzzle from './puzzles/slidingPuzzle.js';
 import wordle from './puzzles/wordle.js';
+
 import makeSound from './helpers/makeSound.js';
 import backgroundMusic from '../sounds/backgroundSound.mp3';
 import terminalOpen from '../sounds/terminalON.mp3';
@@ -20,6 +21,8 @@ import slide from '../sounds/slideSound.mp3';
 
 const game = document.getElementById('game');
 const computers = [...document.getElementsByClassName('computer')];
+const musicToggleIcon = document.getElementById('music_toggle');
+
 const backMusic = makeSound(backgroundMusic, [['loop', 'loop']]);
 backMusic.volume = 0.5;
 const openSound = makeSound(terminalOpen);
@@ -118,12 +121,20 @@ export default () => {
     },
   });
 
-  const play = () => {
-    backMusic.play();
-    document.removeEventListener('click', play);
-  };
+  musicToggleIcon.classList.add('music_off');
 
-  document.addEventListener('click', play);
+  let isMusicPaused = true;
+  musicToggleIcon.addEventListener('click', ({ target }) => {
+    if (isMusicPaused) {
+      backMusic.play();
+      isMusicPaused = false;
+    } else {
+      backMusic.pause();
+      isMusicPaused = true;
+    }
+    target.classList.toggle('music_off');
+    target.classList.toggle('music_on');
+  });
 
   computers.forEach((computer) => {
     computer.addEventListener('click', ({ target }) => {
