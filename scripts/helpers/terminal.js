@@ -39,9 +39,9 @@ class Terminal {
     wrap.classList.add('bl');
     wrap.append(typingManager);
     this.container.append(wrap);
-    const mElems = messages.map((m) => {
+    const mElems = messages.map((message) => {
       const span = document.createElement('span');
-      span.innerHTML = m;
+      span.innerHTML = message;
       span.classList.add('hide');
       span.classList.add('bl');
       typingManager.before(span);
@@ -156,7 +156,9 @@ class Terminal {
         document.body.append(boom);
         boom.classList.add('boom');
         this.sounds.backMusic.remove();
-        this.sounds.finalMusic.play();
+        setTimeout(() => {
+          this.sounds.finalMusic.play();
+        }, 3000);
       }, 4000);
     } else {
       this.type(this.content.files[filename]);

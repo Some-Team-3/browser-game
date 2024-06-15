@@ -24,25 +24,19 @@ const computers = [...document.getElementsByClassName('computer')];
 const musicToggleIcon = document.getElementById('music_toggle');
 
 const backMusic = makeSound(backgroundMusic, [['loop', 'loop']]);
-backMusic.volume = 0.5;
+const finalMusic = makeSound(finalGameMusic, [['loop', 'loop']]);
 const openSound = makeSound(terminalOpen);
 const closeSound = makeSound(terminalClose);
-const finalMusic = makeSound(finalGameMusic, [['loop', 'loop']]);
 const sSound1 = makeSound(simon1);
 const sSound2 = makeSound(simon2);
 const sSound3 = makeSound(simon3);
 const sSound4 = makeSound(simon4);
-const errSound = makeSound(errorSound);
-errSound.volume = 0.2;
 const clickSound = makeSound(pressKey);
-clickSound.volume = 0.7;
-clickSound.playbackRate = 1.5;
 const slideSound = makeSound(slide);
-slideSound.volume = 0.6;
-slideSound.playbackRate = 1.5;
+const errSound = makeSound(errorSound);
 
 const state = {
-  possessed: ['c1'],
+  possessed: ['c1', 'main'],
   c1: {
     access: 'granted',
     loading: 'run',
@@ -99,8 +93,8 @@ const state = {
     puzzle_state: 'not solved',
   },
   main: {
-    access: 'denied',
-    loading: 'run',
+    access: 'granted',
+    loading: 'rnun',
     password: '04061',
     files: ['final_th0ught$', 'D0_Y0U_R3M3MB3R'],
     puzzle: {
@@ -119,6 +113,19 @@ export default () => {
     resources: {
       ru,
     },
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    backMusic.volume = 0.1;
+    errSound.volume = 0.2;
+    clickSound.volume = 0.7;
+    clickSound.playbackRate = 2;
+    slideSound.volume = 0.2;
+    slideSound.playbackRate = 2;
+    sSound1.volume = 0.3;
+    sSound2.volume = 0.3;
+    sSound3.volume = 0.3;
+    sSound4.volume = 0.3;
   });
 
   musicToggleIcon.classList.add('music_off');
@@ -149,16 +156,16 @@ export default () => {
           state.possessed,
           {
             backMusic,
+            finalMusic,
             openSound,
             closeSound,
-            finalMusic,
             sSound1,
             sSound2,
             sSound3,
             sSound4,
-            errSound,
             clickSound,
             slideSound,
+            errSound,
           },
         );
         terminal.run(game);
