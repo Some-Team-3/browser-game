@@ -23,7 +23,7 @@ body {
   align-items: center;
 
   z-index: 0;
-  background: center/cover url('/images/generated_location_placeholder.png') no-repeat;
+  background: center/cover url('/images/generated_location.png') no-repeat;
 }
 
 #command_line {
@@ -310,8 +310,8 @@ body {
   aspect-ratio: 1/1;
 
   position: absolute;
-  top: 5%;
-  left: 5%;
+  top: 6%;
+  left: 3%;
 
   background-size: contain;
   background-position: center;
@@ -319,9 +319,9 @@ body {
 }
 
 .music_on {
-  background-image: url('../images/backMusic_disable.png'), radial-gradient(farthest-side, #5bf870, transparent);
+  background-image: url('../images/backMusic_disable.png');
 }
 
 .music_off {
-  background-image: url('../images/backMusic_enable.png'), radial-gradient(farthest-side, #5bf870, transparent);
+  background-image: url('../images/backMusic_enable.png');
 }
